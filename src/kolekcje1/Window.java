@@ -2,10 +2,13 @@ package kolekcje1;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javafx.scene.layout.Border;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -51,6 +54,23 @@ public class Window extends JFrame implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+        File currentFile;
+        CharCounting cc = new CharCounting();
+            
+        if(source == bOpen){
+            JFileChooser jfc = new JFileChooser();
+            if(jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+            currentFile = jfc.getSelectedFile();
+            cc.getTextFromFile(currentFile);
+            taFileText.setText(cc.getTextFromFile());
+            }
+        }else if(source == bClose){
+            taFileText.setText("");
+        }else if(source == bShowCharFrequency){
+            Window2 w2 = new Window2(this);
+            w2.setVisible(true);
+        }
         
     }
     
