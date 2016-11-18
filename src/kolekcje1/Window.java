@@ -17,10 +17,12 @@ public class Window extends JFrame implements ActionListener{
     JTextArea taFileText;
     JButton bOpen, bClose, bShowCharFrequency;
     JScrollPane spTextScroll;
+    CharCounting cc;
+    File currentFile = null;
     
     Window(){
         setTitle("Zliczanie znaków w pliku tekstowym");
-        setSize(600, 500);
+        setSize(600, 400);
         setLocation(500, 500);
         setLayout(null);
         setResizable(false);
@@ -50,26 +52,32 @@ public class Window extends JFrame implements ActionListener{
         bShowCharFrequency.addActionListener(this);
         add(bShowCharFrequency);
         
+        cc = new CharCounting();
+        
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        File currentFile;
-        CharCounting cc = new CharCounting();
+
             
         if(source == bOpen){
             JFileChooser jfc = new JFileChooser();
             if(jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
             currentFile = jfc.getSelectedFile();
-            cc.getTextFromFile(currentFile);
+            cc.readTextFromFile(currentFile);
             taFileText.setText(cc.getTextFromFile());
             }
         }else if(source == bClose){
             taFileText.setText("");
+            currentFile = null;
+            cc.charCount.clear();
+            
         }else if(source == bShowCharFrequency){
-            Window2 w2 = new Window2(this);
-            w2.setVisible(true);
+            if(currentFile != null){
+                Window2 w2 = new Window2(this, cc);
+                w2.setVisible(true);
+            }
         }
         
     }

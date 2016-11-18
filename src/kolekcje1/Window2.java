@@ -6,12 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class Window2 extends JFrame implements ActionListener{
+public class Window2 extends JFrame{
     
     JTextArea taFileText;
     JScrollPane spTextScroll;
     
-    Window2(JFrame parentWindow){
+    Window2(JFrame parentWindow, CharCounting cc){
         setTitle("Częstość znaków");
         setSize(265, 340);
         setLocation(parentWindow.getLocation().x + parentWindow.getWidth() + 15, parentWindow.getLocation().y);
@@ -25,11 +25,10 @@ public class Window2 extends JFrame implements ActionListener{
         spTextScroll.setSize(250, 300);
         add(spTextScroll);
         
+        cc.fillMapFrequency();
+        taFileText.setText(cc.getCountedChars());
+
     } 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        
-    }
     
 }

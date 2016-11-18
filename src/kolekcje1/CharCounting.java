@@ -14,7 +14,7 @@ public class CharCounting {
     private String textFromFile;
     Map<Character, Integer> charCount = new HashMap<Character, Integer>();
     
-    void getTextFromFile(File file){
+    void readTextFromFile(File file){
         String buffer = "";
         String line = "";
         
@@ -32,6 +32,29 @@ public class CharCounting {
 
     public String getTextFromFile() {
         return textFromFile;
+    }
+    
+    void fillMapFrequency(){
+        char sign = ' ';
+        for(int i = 0;i < textFromFile.length();i++){
+            sign = textFromFile.charAt(i);
+            
+            if(charCount.containsKey(sign)){
+                charCount.put(sign, charCount.get(sign) + 1);
+            }else{
+                charCount.put(sign, 1);
+            }
+        }        
+    }
+    
+    String getCountedChars(){ //mozna przerobic dla tab enter, spacja
+        String buffer = "";
+        
+        for(Character key: charCount.keySet()){
+            buffer += key + " = " + charCount.get(key) + "\n";
+        }
+        
+        return buffer;
     }
     
 }
